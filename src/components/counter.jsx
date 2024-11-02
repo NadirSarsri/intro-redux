@@ -1,34 +1,15 @@
-import { useRef, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  incremented,
-  decremented,
-  incrementedByAmount,
-} from "../features/counterSlice";
+import { useDispatch } from "react-redux";
+import { incremented, decremented, deleted } from "../features/counterSlice";
 
-const Counter = () => {
-  const value = useSelector((state) => state.value);
+const Counter = ({ counter }) => {
   const dispatch = useDispatch();
 
-  const amountRef = useRef();
   return (
     <div>
-      <button onClick={() => dispatch(decremented())}>-</button>
-      <span>{value}</span>
-      <button onClick={() => dispatch(incremented())}>+</button>
-      <hr />
-      <p>Incrementer par une valeur</p>
-      saisir la valeur:{" "}
-      <input
-        ref={amountRef}
-        onChange={(e) => {
-          dispatch(incrementedByAmount(Number(amountRef.current.value)));
-        }}
-        type="text"
-      />{" "}
-      {/* <button onClick={() => dispatch(incrementedByAmount(Number(amount)))}>
-        Increment by {amount}
-      </button> */}
+      <span>{counter.value}</span>
+      <button onClick={() => dispatch(decremented(counter))}>Decrement</button>
+      <button onClick={() => dispatch(incremented(counter))}>Increment</button>
+      <button onClick={() => dispatch(deleted(counter))}>Delete</button>
     </div>
   );
 };
